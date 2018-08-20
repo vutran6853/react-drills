@@ -4,29 +4,38 @@ class FilterBox extends Component {
     constructor() {
         super();
         this.state = { 
-            Array: ["C0de", "Web Dev", "Front End Dev", "Backend Dev", "Full Stack Dev", "NoN Dev"],
-            input: '',
-            filterArray: []
+            Array: ["code", "web dev", "front end dev", "backend dev", "full stack dev", "non dev"],
+            filterString: ""
          }
          this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(filter) {
-        this.setState({ input: filter });
-        console.log(this.state.input);
+        this.setState({ filterString: filter });
+        // console.log(this.state.Array);
     }
 
     render() { 
-        let joblistDisplay = this.state.Array.filter(array => this.state.input.length)
+        let joblistDisplay = this.state.Array.filter((elem, index) => {
+            console.log(elem, index);
+            return elem.includes(this.state.filterString);
+            // this.state.filterString);
+        }).map((elem, index) => {
+            console.log(elem, index)
+            return <h2 key={ index }> {elem} </h2>
+        })
+        
+        
         console.log(joblistDisplay);
-
-
 
         return ( 
             <div>
                 <h3>Seach Box</h3>
-                <input onChange={(e) => this.handleChange(e.target.value)} placeholder="Enter a letters" ></input>
-                <span><br/>{ Array }</span>
+                <input onChange={(e) => this.handleChange(e.target.value)} 
+                        placeholder="Enter a letters" 
+                        type="text">
+                </input>
+                <span><br/>{ joblistDisplay }</span>
 
             </div>
          );
